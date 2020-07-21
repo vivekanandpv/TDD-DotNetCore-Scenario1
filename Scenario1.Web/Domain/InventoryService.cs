@@ -4,7 +4,7 @@ namespace Scenario1.Web.Domain
     {
         public bool Purchase(Invoice invoice)
         {
-            return true;
+            return !invoice.IsEmpty;
         }
     }
 }
