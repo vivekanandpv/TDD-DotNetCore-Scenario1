@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,10 +7,31 @@ namespace Scenario1.Web.Domain
     public class Invoice
     {
         private readonly IList<LineItem> lineItems;
+        private readonly DateTime date;
+        private readonly string invoiceNumber;
+        private readonly string vendorName;
 
-        public Invoice()
+        public Invoice(DateTime date, string invoiceNumber, string vendorName)
         {
+            if (date > DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException(nameof(date));
+            }
+
+            if (string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                throw new ArgumentNullException(nameof(invoiceNumber));
+            }
+
+            if (string.IsNullOrWhiteSpace(vendorName))
+            {
+                throw new ArgumentNullException(nameof(vendorName));
+            }
+
             lineItems = new List<LineItem>();
+            this.date = date;
+            this.invoiceNumber = invoiceNumber;
+            this.vendorName = vendorName;
         }
 
         public int Size
@@ -21,6 +43,14 @@ namespace Scenario1.Web.Domain
 
         }
 
+        public string Number
+        {
+            get
+            {
+                return invoiceNumber;
+            }
+        }
+
         public bool IsEmpty
         {
             get
@@ -30,11 +60,27 @@ namespace Scenario1.Web.Domain
 
         }
 
+        public string VendorName
+        {
+            get
+            {
+                return vendorName;
+            }
+        }
+
         public decimal GrandTotal
         {
             get
             {
                 return getGrandTotal();
+            }
+        }
+
+        public DateTime Date
+        {
+            get
+            {
+                return date;
             }
         }
 

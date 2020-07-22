@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Scenario1.Web.Domain;
 
@@ -9,7 +10,8 @@ namespace Scenario1.Tests
         public void ReturnTrueForPurchaseWithInvoiceThatHasLineItemsThatHavePositiveLineAmounts()
         {
             //  Arrange
-            var invoice = new Invoice();
+            var date = DateTime.Now;
+            var invoice = new Invoice(date, "A1234", "Vendor");
             var inventoryService = new InventoryService();
             var lineItem = new LineItem(itemName:"ABC", quantity:10, price:10.00m);
 
@@ -25,7 +27,8 @@ namespace Scenario1.Tests
         public void ReturnFalseForAnEmptyInvoice()
         {
             //  Arrange
-            var invoice = new Invoice();
+            var date = DateTime.Now;
+            var invoice = new Invoice(date, "A1234", "Vendor");
             var inventoryService = new InventoryService();
 
             //  Act
@@ -41,7 +44,8 @@ namespace Scenario1.Tests
         {
             //  Arrange
             var lineItem = new LineItem(itemName: "ABC", quantity: 1, price: 0m);
-            var invoice = new Invoice();
+            var date = DateTime.Now;
+            var invoice = new Invoice(date, "A1234", "Vendor");
             invoice.AddItem(lineItem);
             var inventoryService = new InventoryService();
 
