@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Scenario1.Web.Domain
 {
@@ -11,6 +8,11 @@ namespace Scenario1.Web.Domain
 
         public LineItem(decimal lineAmount = 0)
         {
+            if (lineAmount < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             this.lineAmount = lineAmount;
         }
 

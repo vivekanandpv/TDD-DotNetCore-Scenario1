@@ -52,6 +52,5 @@ namespace Scenario1.Tests
 
             Assert.That(invoice.GrandTotal, Is.EqualTo(600));
         }
-
     }
 }
