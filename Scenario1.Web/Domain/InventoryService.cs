@@ -4,7 +4,12 @@ namespace Scenario1.Web.Domain
     {
         public bool Purchase(Invoice invoice)
         {
-            return !invoice.IsEmpty;
+            if (invoice.IsEmpty || invoice.GrandTotal == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
