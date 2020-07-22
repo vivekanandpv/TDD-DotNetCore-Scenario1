@@ -40,7 +40,7 @@ namespace Scenario1.Tests
         public void ReturnFalseForInvoiceWithGrandTotalEqualToZero()
         {
             //  Arrange
-            var lineItem = new LineItem(itemName: "ABC", quantity: 0, price: 10.00m);
+            var lineItem = new LineItem(itemName: "ABC", quantity: 1, price: 0m);
             var invoice = new Invoice();
             invoice.AddItem(lineItem);
             var inventoryService = new InventoryService();
