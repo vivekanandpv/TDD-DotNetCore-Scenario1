@@ -9,14 +9,14 @@ namespace Scenario1.Tests
         [Test]
         public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmount()
         {
-            Assert.That(() => new LineItem(-1.00m), Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => new LineItem(itemName: "ABC", quantity: -1, price: 100.00m), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
         public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmountForPropertyLineAmount()
         {
             Assert.That(
-                () => new LineItem(-1.00m),
+                () => new LineItem(itemName: "ABC", quantity: -1, price: 100.00m),
                 Throws.TypeOf<ArgumentOutOfRangeException>()
                     .With
                     .Matches<ArgumentOutOfRangeException>(
@@ -32,6 +32,14 @@ namespace Scenario1.Tests
             //        .Property("ParamName")
             //        .EqualTo("lineAmount")
             //    );
+        }
+
+        [Test]
+        public void HaveTheLineAmountEqualToTheProductOfPriceAndQuantity()
+        {
+            var lineItem = new LineItem(itemName: "XYZ", quantity: 2, price: 100.00m);
+
+            Assert.That(lineItem.LineAmount, Is.EqualTo(200));
         }
     }
 }

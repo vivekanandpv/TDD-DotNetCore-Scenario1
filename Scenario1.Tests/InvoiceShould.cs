@@ -10,7 +10,7 @@ namespace Scenario1.Tests
         {
             //  Arrange
             var invoice = new Invoice();
-            var lineItem = new LineItem();
+            var lineItem = new LineItem(itemName:"ABC", quantity:1, price:100.00m);
 
             //  Act
             invoice.AddItem(lineItem);
@@ -24,7 +24,7 @@ namespace Scenario1.Tests
         {
             //  Arrange
             var invoice = new Invoice();
-            var lineItem = new LineItem();
+            var lineItem = new LineItem(itemName: "ABC", quantity: 1, price: 100.00m);
 
             //  Act
             invoice.AddItem(lineItem);
@@ -37,9 +37,9 @@ namespace Scenario1.Tests
         public void HaveTheGrandTotalEqualToTheAccumulatedTotalOfLineAmounts()
         {
             //  Arrange
-            var lineItem1 = new LineItem(lineAmount: 100);
-            var lineItem2 = new LineItem(lineAmount: 200);
-            var lineItem3 = new LineItem(lineAmount: 300);
+            var lineItem1 = new LineItem(itemName: "ABC", quantity: 1, price: 100.00m);
+            var lineItem2 = new LineItem(itemName: "DEF", quantity: 2, price: 100.00m);
+            var lineItem3 = new LineItem(itemName: "GHI", quantity: 3, price: 100.00m);
 
             var invoice = new Invoice();
 

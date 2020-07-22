@@ -11,7 +11,7 @@ namespace Scenario1.Tests
             //  Arrange
             var invoice = new Invoice();
             var inventoryService = new InventoryService();
-            var lineItem = new LineItem(15.14m);
+            var lineItem = new LineItem(itemName:"ABC", quantity:10, price:10.00m);
 
             //  Act
             invoice.AddItem(lineItem);
@@ -40,7 +40,7 @@ namespace Scenario1.Tests
         public void ReturnFalseForInvoiceWithGrandTotalEqualToZero()
         {
             //  Arrange
-            var lineItem = new LineItem(lineAmount:0);
+            var lineItem = new LineItem(itemName: "ABC", quantity: 0, price: 10.00m);
             var invoice = new Invoice();
             invoice.AddItem(lineItem);
             var inventoryService = new InventoryService();
