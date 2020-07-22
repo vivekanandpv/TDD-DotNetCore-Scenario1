@@ -11,6 +11,11 @@ namespace Scenario1.Web.Domain
 
         public LineItem(string itemName, int quantity, decimal price)
         {
+            if (quantity <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(quantity));
+            }
+
             this.itemName = itemName;
             this.quantity = quantity;
             this.price = price;

@@ -16,7 +16,7 @@ namespace Scenario1.Tests
         public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmountForPropertyLineAmount()
         {
             Assert.That(
-                () => new LineItem(itemName: "ABC", quantity: -1, price: 100.00m),
+                () => new LineItem(itemName: "ABC", quantity: 1, price: -100.00m),
                 Throws.TypeOf<ArgumentOutOfRangeException>()
                     .With
                     .Matches<ArgumentOutOfRangeException>(
@@ -43,6 +43,19 @@ namespace Scenario1.Tests
             var lineItem = new LineItem(itemName: "XYZ", quantity: quantity, price: price);
 
             return lineItem.LineAmount;
+        }
+
+        [Test]
+        public void ThrowArgumentOutOfRangeExceptionForZeroAndNegativeQuantity()
+        {
+            Assert.That(
+                () => new LineItem(itemName: "ABC", quantity: -1, price: 0m),
+                Throws.TypeOf<ArgumentOutOfRangeException>()
+                    .With
+                    .Matches<ArgumentOutOfRangeException>(
+                        e => e.ParamName == "quantity"
+                    )
+            );
         }
     }
 }
