@@ -10,7 +10,7 @@ namespace Scenario1.Web.Domain
         {
             if (lineAmount < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(lineAmount));
             }
 
             this.lineAmount = lineAmount;
