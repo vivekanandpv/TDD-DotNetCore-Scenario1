@@ -30,6 +30,29 @@ namespace Scenario1.Web.Domain
 
         }
 
+        public decimal GrandTotal
+        {
+            get
+            {
+                return getGrandTotal();
+            }
+        }
+
+        private decimal getGrandTotal()
+        {
+            decimal total = 0m;
+            //  iterate over the lineitems
+            //  keep the cumulative count
+
+            foreach (var lineItem in lineItems)
+            {
+                total += lineItem.LineAmount;
+            }
+            //  return
+
+            return total;
+        }
+
 
         public void AddItem(LineItem item)
         {
