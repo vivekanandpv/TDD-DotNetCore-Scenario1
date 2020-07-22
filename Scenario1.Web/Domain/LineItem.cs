@@ -16,16 +16,16 @@ namespace Scenario1.Web.Domain
                 throw new ArgumentOutOfRangeException(nameof(quantity));
             }
 
+            if (price < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(price));
+            }
+
             this.itemName = itemName;
             this.quantity = quantity;
             this.price = price;
 
             lineAmount = this.quantity * this.price;
-
-            if (lineAmount < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(lineAmount));
-            }
         }
 
         public decimal LineAmount

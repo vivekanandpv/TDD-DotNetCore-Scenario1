@@ -12,27 +12,18 @@ namespace Scenario1.Tests
             Assert.That(() => new LineItem(itemName: "ABC", quantity: -1, price: 100.00m), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
-        [Test]
-        public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmountForPropertyLineAmount()
-        {
-            Assert.That(
-                () => new LineItem(itemName: "ABC", quantity: 1, price: -100.00m),
-                Throws.TypeOf<ArgumentOutOfRangeException>()
-                    .With
-                    .Matches<ArgumentOutOfRangeException>(
-                        e => e.ParamName=="lineAmount"
-                        )
-            );
-
-            //  Also possible, but type unsafe because of literal strings
-            //Assert.That(
-            //    () => new LineItem(-1.00m), 
-            //    Throws.TypeOf<ArgumentOutOfRangeException>()
-            //        .With
-            //        .Property("ParamName")
-            //        .EqualTo("lineAmount")
-            //    );
-        }
+        //[Test]
+        //public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmountForPropertyLineAmount()
+        //{
+        //    Assert.That(
+        //        () => new LineItem(itemName: "ABC", quantity: 1, price: -100.00m),
+        //        Throws.TypeOf<ArgumentOutOfRangeException>()
+        //            .With
+        //            .Matches<ArgumentOutOfRangeException>(
+        //                e => e.ParamName=="lineAmount"
+        //                )
+        //    );
+        //}
 
         [Test]
         [TestCase(2, 100.00, ExpectedResult = 200.00)]
@@ -54,6 +45,19 @@ namespace Scenario1.Tests
                     .With
                     .Matches<ArgumentOutOfRangeException>(
                         e => e.ParamName == "quantity"
+                    )
+            );
+        }
+
+        [Test]
+        public void ThrowArgumentOutOfRangeExceptionForNegativePrice()
+        {
+            Assert.That(
+                () => new LineItem(itemName: "ABC", quantity: 1, price: -1.14m),
+                Throws.TypeOf<ArgumentOutOfRangeException>()
+                    .With
+                    .Matches<ArgumentOutOfRangeException>(
+                        e => e.ParamName == "price"
                     )
             );
         }
