@@ -35,11 +35,14 @@ namespace Scenario1.Tests
         }
 
         [Test]
-        public void HaveTheLineAmountEqualToTheProductOfPriceAndQuantity()
+        [TestCase(2, 100.00, ExpectedResult = 200.00)]
+        [TestCase(4, 10.00, ExpectedResult = 40.00)]
+        [TestCase(3, 25.25, ExpectedResult = 75.75)]
+        public decimal ReturnTheLineAmountEqualToTheProductOfPriceAndQuantity(int quantity, decimal price)
         {
-            var lineItem = new LineItem(itemName: "XYZ", quantity: 2, price: 100.00m);
+            var lineItem = new LineItem(itemName: "XYZ", quantity: quantity, price: price);
 
-            Assert.That(lineItem.LineAmount, Is.EqualTo(200));
+            return lineItem.LineAmount;
         }
     }
 }
