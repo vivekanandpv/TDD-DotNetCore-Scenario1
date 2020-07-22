@@ -7,9 +7,12 @@ namespace Scenario1.Tests
     public class LineItemShould
     {
         [Test]
-        public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmount()
+        [TestCase(1, -100)]
+        [TestCase(-1, 200)]
+        [TestCase(-5, -14.25)]
+        public void ThrowArgumentOutOfRangeExceptionForNegativeLineAmount(int quantity, decimal price)
         {
-            Assert.That(() => new LineItem(itemName: "ABC", quantity: -1, price: 100.00m), Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => new LineItem(itemName: "ABC", quantity: quantity, price: price), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
         //[Test]
@@ -37,10 +40,13 @@ namespace Scenario1.Tests
         }
 
         [Test]
-        public void ThrowArgumentOutOfRangeExceptionForZeroAndNegativeQuantity()
+        [TestCase(-1, 0)]
+        [TestCase(-100, 10)]
+        [TestCase(-52, 500)]
+        public void ThrowArgumentOutOfRangeExceptionForZeroAndNegativeQuantity(int quantity, decimal price)
         {
             Assert.That(
-                () => new LineItem(itemName: "ABC", quantity: -1, price: 0m),
+                () => new LineItem(itemName: "ABC", quantity: quantity, price: price),
                 Throws.TypeOf<ArgumentOutOfRangeException>()
                     .With
                     .Matches<ArgumentOutOfRangeException>(
@@ -50,10 +56,13 @@ namespace Scenario1.Tests
         }
 
         [Test]
-        public void ThrowArgumentOutOfRangeExceptionForNegativePrice()
+        [TestCase(2, -741)]
+        [TestCase(5, -58.47)]
+        [TestCase(14, -5748.56)]
+        public void ThrowArgumentOutOfRangeExceptionForNegativePrice(int quantity, decimal price)
         {
             Assert.That(
-                () => new LineItem(itemName: "ABC", quantity: 1, price: -1.14m),
+                () => new LineItem(itemName: "ABC", quantity: quantity, price: price),
                 Throws.TypeOf<ArgumentOutOfRangeException>()
                     .With
                     .Matches<ArgumentOutOfRangeException>(
