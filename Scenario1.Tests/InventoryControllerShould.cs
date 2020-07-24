@@ -111,7 +111,5 @@ namespace Scenario1.Tests
             Assert.That(product, Is.EqualTo(productTest));
             Assert.That(product == null, Is.EqualTo(false));
         }
-
-        
     }
 }
