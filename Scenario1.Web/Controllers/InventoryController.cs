@@ -20,11 +20,13 @@ namespace Scenario1.Web.Controllers
             this.service = service;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
             return Ok(service.GetAllProducts());
         }
 
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductById(int id)
         {
             try
@@ -37,6 +39,7 @@ namespace Scenario1.Web.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddProduct(ProductAddViewModel vm)
         {
             try
@@ -49,6 +52,7 @@ namespace Scenario1.Web.Controllers
             }
         }
 
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try
@@ -62,6 +66,7 @@ namespace Scenario1.Web.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateProduct(int id, ProductUpdateViewModel vm)
         {
             try
