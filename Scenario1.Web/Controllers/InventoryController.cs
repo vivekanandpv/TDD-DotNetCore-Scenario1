@@ -23,5 +23,10 @@ namespace Scenario1.Web.Controllers
         {
             return Ok(service.GetAllProducts());
         }
+
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            return Ok(service.GetProductById(id));
+        }
     }
 }

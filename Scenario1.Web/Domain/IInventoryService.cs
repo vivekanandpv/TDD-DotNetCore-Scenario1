@@ -8,5 +8,6 @@ namespace Scenario1.Web.Domain
     public interface IInventoryService
     {
         IEnumerable<Product> GetAllProducts();
+        Product GetProductById(int id);
     }
 }

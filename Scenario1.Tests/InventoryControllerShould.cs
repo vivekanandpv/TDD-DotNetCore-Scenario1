@@ -58,5 +58,28 @@ namespace Scenario1.Tests
             //  Assert
             Assert.That(productsFromController, Is.EqualTo(productsFromTest));
         }
+
+        [Test]
+        [TestCase(14)]
+        [TestCase(25)]
+        [TestCase(104)]
+        public async Task ReturnTheProductForGetProductByIdWhereIdIsNonZeroPositiveInteger(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+
+            //  Configure for the id
+            service.GetProductById(Arg.Is<int>(i => i > 0)).Returns(new Product(id: id));
+
+            //  Act
+            //  Act
+            OkObjectResult result = await controller.GetProductById(id) as OkObjectResult;
+            var product = result.Value as Product;
+
+            //  Assert
+            Assert.That(product, Is.InstanceOf<Product>());
+            Assert.That(product.Id, Is.EqualTo(id));
+        }
     }
 }
