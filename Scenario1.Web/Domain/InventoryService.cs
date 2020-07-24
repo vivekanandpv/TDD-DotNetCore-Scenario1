@@ -18,12 +18,17 @@ namespace Scenario1.Web.Domain
 
         public IEnumerable<Product> GetAllProducts()
         {
-            throw new System.NotImplementedException();
+            return new List<Product> {new Product(123), new Product(234)};
         }
 
         public Product GetProductById(int id)
         {
-            throw new System.NotImplementedException();
+            if (id <= 0)
+            {
+                throw new Exception();
+            }
+
+            return new Product(id);
         }
 
         public Product AddProduct(ProductAddViewModel vm)
@@ -46,7 +51,12 @@ namespace Scenario1.Web.Domain
 
         public Product UpdateProduct(int id, ProductUpdateViewModel vm)
         {
-            throw new System.NotImplementedException();
+            if (id <= 0)
+            {
+                throw new Exception();
+            }
+
+            return new Product(vm.Id);
         }
     }
 }
