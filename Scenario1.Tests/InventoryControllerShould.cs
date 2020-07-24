@@ -90,7 +90,7 @@ namespace Scenario1.Tests
         [TestCase(1)]
         [TestCase(23)]
         [TestCase(456)]
-        public async Task ReturnProductForValidProductViewModel(int id)
+        public async Task ReturnProductForValidProductAddViewModel(int id)
         {
             //  Arrange
             IInventoryService service = Substitute.For<IInventoryService>();
@@ -98,35 +98,20 @@ namespace Scenario1.Tests
 
             //  Configure for the id
             var productViewModelTest = new ProductAddViewModel {Id = id};
+            var productTest = new Product(id);
             service
                 .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id > 0))
-                .Returns(new Product(id));
+                .Returns(productTest);
 
             //  Act
             OkObjectResult result = await controller.AddProduct(productViewModelTest) as OkObjectResult;
-            var product = result.Value as Product;
+            var product = result.Value as Product;  // If result.Value cannot be cast as Product, the object will be null
 
             //  Assert
-            Assert.That(product.Id, Is.EqualTo(id));
+            Assert.That(product, Is.EqualTo(productTest));
+            Assert.That(product == null, Is.EqualTo(false));
         }
 
-        [Test]
-        [TestCase(0)]
-        [TestCase(-1)]
-        [TestCase(-234)]
-        public async Task ThrowsExceptionForInvalidProductViewModel(int id)
-        {
-            IInventoryService service = Substitute.For<IInventoryService>();
-            var controller = new InventoryController(service);
-
-            //  Configure for the id
-            var productViewModelTest = new ProductAddViewModel { Id = id };
-            service
-                .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id <= 0))
-                .Throws(new Exception());
-
-            //  Act & Assert
-            Assert.That(() => service.AddProduct(productViewModelTest), Throws.TypeOf<Exception>());
-        }
+        
     }
 }

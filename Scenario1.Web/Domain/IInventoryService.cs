@@ -11,5 +11,6 @@ namespace Scenario1.Web.Domain
         IEnumerable<Product> GetAllProducts();
         Product GetProductById(int id);
         Product AddProduct(ProductAddViewModel vm);
+        void DeleteProduct(int id);
     }
 }
