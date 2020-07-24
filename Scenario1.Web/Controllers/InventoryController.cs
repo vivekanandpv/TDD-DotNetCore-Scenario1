@@ -12,9 +12,16 @@ namespace Scenario1.Web.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        public IEnumerable<Product> GetAllProducts()
+        private readonly IInventoryService service;
+
+        public InventoryController(IInventoryService service)
         {
-            return new List<Product>();
+            this.service = service;
+        }
+
+        public async Task<IActionResult> GetAllProducts()
+        {
+            return Ok(service.GetAllProducts());
         }
     }
 }
