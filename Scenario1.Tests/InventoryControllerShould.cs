@@ -122,6 +122,11 @@ namespace Scenario1.Tests
             IInventoryService service = Substitute.For<IInventoryService>();
             var controller = new InventoryController(service);
 
+            //  Configure mock
+            service
+                .When(m => m.DeleteProduct(Arg.Is<int>(i => i <= 0)))
+                .Do(_ => throw new Exception());
+
             //  Act
             OkResult result = await controller.DeleteProduct(id) as OkResult;
 
