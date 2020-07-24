@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Scenario1.Web.Domain;
+using Scenario1.Web.ViewModels;
 
 namespace Scenario1.Web.Controllers
 {
@@ -27,6 +28,11 @@ namespace Scenario1.Web.Controllers
         public async Task<IActionResult> GetProductById(int id)
         {
             return Ok(service.GetProductById(id));
+        }
+
+        public async Task<IActionResult> AddProduct(ProductAddViewModel vm)
+        {
+            return Ok(service.AddProduct(vm));
         }
     }
 }
