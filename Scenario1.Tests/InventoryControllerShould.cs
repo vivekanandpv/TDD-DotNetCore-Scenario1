@@ -201,5 +201,29 @@ namespace Scenario1.Tests
             //  Assert
             Assert.That(result == null, Is.EqualTo(false));
         }
+
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(23)]
+        [TestCase(3421)]
+        public async Task ReturnOkForValidProductUpdate(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+            var vm = new ProductUpdateViewModel { Id = id };
+
+            //  Configure mock
+            service
+                .UpdateProduct(Arg.Is<int>(i=>i > 0),Arg.Is<ProductUpdateViewModel>(p => p.Id >= 0))
+                .Returns(new Product(id));
+
+            //  Act
+            OkObjectResult result = await controller.UpdateProduct(id, vm) as OkObjectResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
+        }
     }
 }

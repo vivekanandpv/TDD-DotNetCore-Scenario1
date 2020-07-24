@@ -54,5 +54,17 @@ namespace Scenario1.Web.Controllers
                 return NotFound();
             }
         }
+
+        public async Task<IActionResult> UpdateProduct(int id, ProductUpdateViewModel vm)
+        {
+            try
+            {
+                return Ok(service.UpdateProduct(id, vm));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
     }
 }
