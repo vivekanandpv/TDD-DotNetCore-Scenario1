@@ -87,6 +87,28 @@ namespace Scenario1.Tests
         }
 
         [Test]
+        [TestCase(0)]
+        [TestCase(-25)]
+        [TestCase(-104)]
+        public async Task ReturnNotFoundWhereIdIsZeroOrNegativeInteger(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+
+            //  Configure for the id
+            var productTest = new Product(id);
+            service.GetProductById(Arg.Is<int>(i => i <= 0))
+                .Throws<Exception>();
+
+            //  Act
+            NotFoundResult result = await controller.GetProductById(id) as NotFoundResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
+        }
+
+        [Test]
         [TestCase(1)]
         [TestCase(23)]
         [TestCase(456)]

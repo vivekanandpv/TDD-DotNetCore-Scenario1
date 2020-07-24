@@ -27,7 +27,14 @@ namespace Scenario1.Web.Controllers
 
         public async Task<IActionResult> GetProductById(int id)
         {
-            return Ok(service.GetProductById(id));
+            try
+            {
+                return Ok(service.GetProductById(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> AddProduct(ProductAddViewModel vm)
