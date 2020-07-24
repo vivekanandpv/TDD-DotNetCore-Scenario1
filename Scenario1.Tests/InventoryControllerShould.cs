@@ -26,20 +26,37 @@ namespace Scenario1.Tests
         }
 
         [Test]
-        public async Task GetTheListOfProductsFromTheDependency()
+        public async Task CallGetAllProductsOnTheServiceIfGetAllProductsIsCalled()
         {
             //  Arrange
-            // Test double: Dummy, Fake, Mock, Spy
             IInventoryService service = Substitute.For<IInventoryService>();
             var controller = new InventoryController(service);
 
-            //  Act and assert
-            //If you call controller.GetAllProducts() this should call service.GetAllProducts()
-
+            //  Act
             var _ = await controller.GetAllProducts();
 
             //  Assert!
             service.Received().GetAllProducts();
+        }
+
+        [Test]
+        public async Task ReturnTheListOfProductsFromTheService()
+        {
+            //  Arrange
+            IEnumerable<Product> productsFromTest = new List<Product>();
+            IInventoryService service = Substitute.For<IInventoryService>();
+
+            // configure the mock so that it returns the value we say
+            service.GetAllProducts().Returns(productsFromTest);
+
+            var controller = new InventoryController(service);
+
+            //  Act
+            OkObjectResult result = await controller.GetAllProducts() as OkObjectResult;
+            var productsFromController = result.Value as IEnumerable<Product>;
+
+            //  Assert
+            Assert.That(productsFromController, Is.EqualTo(productsFromTest));
         }
     }
 }
