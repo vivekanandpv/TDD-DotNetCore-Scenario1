@@ -19,13 +19,10 @@ namespace Scenario1.Tests
         [TestCase(-234)]
         public async Task ThrowsExceptionForAddingInvalidProductViewModel(int id)
         {
-            IInventoryService service = Substitute.For<IInventoryService>();
+            IInventoryService service = new InventoryService();
 
             //  Configure for the id
             var productViewModelTest = new ProductAddViewModel { Id = id };
-            service
-                .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id <= 0))
-                .Throws(new Exception());
 
             //  Act & Assert
             Assert.That(() => service.AddProduct(productViewModelTest), Throws.TypeOf<Exception>());
@@ -37,13 +34,7 @@ namespace Scenario1.Tests
         [TestCase(-234)]
         public async Task ThrowsExceptionForDeletingWithNonExistentId(int id)
         {
-            IInventoryService service = Substitute.For<IInventoryService>();
-
-            //  void methods cannot use Throws chaining
-            //  instead we use When and Do combination
-            service
-                .When(m => m.DeleteProduct(Arg.Is<int>(i => i <= 0)))
-                .Do(_ => throw new Exception());
+            IInventoryService service = new InventoryService();
 
             //  Act & Assert
             Assert.That(() => service.DeleteProduct(id), Throws.TypeOf<Exception>());

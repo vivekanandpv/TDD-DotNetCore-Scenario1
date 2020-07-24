@@ -97,7 +97,6 @@ namespace Scenario1.Tests
             var controller = new InventoryController(service);
 
             //  Configure for the id
-            var productTest = new Product(id);
             service.GetProductById(Arg.Is<int>(i => i <= 0))
                 .Throws<Exception>();
 
