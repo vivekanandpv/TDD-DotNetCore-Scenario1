@@ -32,7 +32,27 @@ namespace Scenario1.Web.Controllers
 
         public async Task<IActionResult> AddProduct(ProductAddViewModel vm)
         {
-            return Ok(service.AddProduct(vm));
+            try
+            {
+                return Ok(service.AddProduct(vm));
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+        }
+
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                service.DeleteProduct(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ namespace Scenario1.Tests
             var controller = new InventoryController(service);
 
             //  Configure for the id
-            var productViewModelTest = new ProductAddViewModel {Id = id};
+            var productViewModelTest = new ProductAddViewModel { Id = id };
             var productTest = new Product(id);
             service
                 .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id > 0))
@@ -110,6 +110,91 @@ namespace Scenario1.Tests
             //  Assert
             Assert.That(product, Is.EqualTo(productTest));
             Assert.That(product == null, Is.EqualTo(false));
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(34)]
+        [TestCase(4589)]
+        public async Task ReturnOkForValidIdDeletion(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+
+            //  Act
+            OkResult result = await controller.DeleteProduct(id) as OkResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-34)]
+        [TestCase(-4589)]
+        public async Task ReturnNotFoundForInvalidIdDeletion(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+
+            //  Configure mock
+            service
+                .When(m => m.DeleteProduct(Arg.Is<int>(i => i <= 0)))
+                .Do(_ => throw new Exception());
+
+            //  Act
+            NotFoundResult result = await controller.DeleteProduct(id) as NotFoundResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(23)]
+        [TestCase(3421)]
+        public async Task ReturnOkForValidProductAddition(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+            var vm = new ProductAddViewModel { Id = id };
+
+            //  Configure mock
+            service
+                .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id >= 0))
+                .Returns(new Product(id));
+
+            //  Act
+            OkObjectResult result = await controller.AddProduct(vm) as OkObjectResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-34)]
+        [TestCase(-4589)]
+        public async Task ReturnNotFoundForInvalidProductAddition(int id)
+        {
+            //  Arrange
+            IInventoryService service = Substitute.For<IInventoryService>();
+            var controller = new InventoryController(service);
+            var vm = new ProductAddViewModel { Id = id };
+
+            //  Configure mock
+            service
+                .AddProduct(Arg.Is<ProductAddViewModel>(p => p.Id <= 0))
+                .Throws(new Exception());
+
+            //  Act
+            NotFoundResult result = await controller.AddProduct(vm) as NotFoundResult;
+
+            //  Assert
+            Assert.That(result == null, Is.EqualTo(false));
         }
     }
 }
